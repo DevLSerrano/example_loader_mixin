@@ -1,3 +1,4 @@
+import 'package:example_loader_mixin/extension/async_extension.dart';
 import 'package:example_loader_mixin/home/second_page.dart';
 import 'package:example_loader_mixin/mixin/async_loader.dart';
 import 'package:get/get.dart';
@@ -22,10 +23,16 @@ class HomeController extends GetxController with AsyncLoaderMixin {
     });
   }
 
+  Future<void> _fakeError() async {
+    await Future.delayed(const Duration(seconds: 3), () {
+      throw 'Erro em seus dados.';
+    });
+  }
+
   Future<bool> isValidUser() async {
-    return await callAsyncLoader(Future.delayed(const Duration(seconds: 3), () {
+    return await Future.delayed(const Duration(seconds: 3), () {
       return true;
-    }));
+    }).asyncLoader();
   }
 
   Future<void> isValidUserAndLogin() async {
@@ -44,11 +51,5 @@ class HomeController extends GetxController with AsyncLoaderMixin {
     return await callAsyncLoader(Future.delayed(const Duration(seconds: 3), () {
       Get.back();
     }));
-  }
-
-  Future<void> _fakeError() async {
-    await Future.delayed(const Duration(seconds: 3), () {
-      throw 'Erro em seus dados.';
-    });
   }
 }
