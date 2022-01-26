@@ -1,3 +1,4 @@
+import 'package:example_loader_mixin/extension/async_extension.dart';
 import 'package:example_loader_mixin/home/home_controller.dart';
 import 'package:flutter/material.dart';
 
@@ -31,8 +32,7 @@ class SecondPage extends StatelessWidget {
             height: 16,
           ),
           ElevatedButton(
-            onPressed: () async =>
-                await controller.callAsyncLoader(controller.goBack()),
+            onPressed: () async => await controller.goBack().asyncLoader(),
             child: const Text('Voltar com async.'),
           ),
         ],

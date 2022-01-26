@@ -30,9 +30,9 @@ class HomeController extends GetxController with AsyncLoaderMixin {
   }
 
   Future<bool> isValidUser() async {
-    return await Future.delayed(const Duration(seconds: 3), () {
+    return await callAsyncLoader(Future.delayed(const Duration(seconds: 3), () {
       return true;
-    }).asyncLoader();
+    }));
   }
 
   Future<void> isValidUserAndLogin() async {
@@ -51,5 +51,52 @@ class HomeController extends GetxController with AsyncLoaderMixin {
     return await callAsyncLoader(Future.delayed(const Duration(seconds: 3), () {
       Get.back();
     }));
+  }
+
+  ///! extension
+  ///
+  ///
+  Future<void> extensionloginSucesso() async {
+    await Future.delayed(const Duration(seconds: 3), () {})
+        .asyncLoader()
+        .then((value) => Get.to(
+              () => SecondPage(
+                controller: this,
+              ),
+            ));
+  }
+
+  Future<void> extensionloginError() async {
+    await _extensionfakeError().asyncLoader().catchError((e) {
+      Get.showSnackbar(GetSnackBar(
+        title: 'Error',
+        message: e,
+        duration: const Duration(seconds: 1),
+      ));
+    });
+  }
+
+  Future<void> _extensionfakeError() async {
+    await Future.delayed(const Duration(seconds: 3), () {
+      throw 'Erro em seus dados.';
+    });
+  }
+
+  Future<bool> extensionisValidUser() async {
+    return await Future.delayed(const Duration(seconds: 3), () {
+      return true;
+    }).asyncLoader();
+  }
+
+  Future<void> extensionisValidUserAndLogin() async {
+    return await isValidUser().asyncLoader().then((value) async {
+      await loginSucesso();
+    });
+  }
+
+  Future<void> extensionisValidUserAndLoginError() async {
+    return await isValidUser().asyncLoader().then((value) async {
+      await loginError();
+    });
   }
 }

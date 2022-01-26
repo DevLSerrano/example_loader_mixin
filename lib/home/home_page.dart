@@ -14,7 +14,29 @@ class HomePage extends StatelessWidget {
       builder: (controller) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Modelo de Mixin'),
+            title: Row(
+              children: [
+                Container(
+                  width: 30,
+                  height: 30,
+                  color: Colors.blue,
+                ),
+                const SizedBox(
+                  width: 16,
+                ),
+                const Text('Mixin'),
+                const Spacer(),
+                Container(
+                  width: 30,
+                  height: 30,
+                  color: Colors.red,
+                ),
+                const SizedBox(
+                  width: 16,
+                ),
+                const Text('Extension')
+              ],
+            ),
           ),
           body: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -52,6 +74,55 @@ class HomePage extends StatelessWidget {
                   await controller.isValidUserAndLoginError();
                 },
                 child: const Text('User Valido ? + Login erro'),
+              ),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () async => controller.extensionloginSucesso(),
+                  child: const Text('Login Sucesso'),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.red,
+                  ),
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () async => controller.extensionloginError(),
+                child: const Text('Login Falha'),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.red,
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  if (await controller.extensionisValidUser()) {
+                    Get.showSnackbar(const GetSnackBar(
+                      title: 'Sucesso',
+                      message: 'É um user valido.',
+                      duration: Duration(seconds: 1),
+                    ));
+                  }
+                },
+                child: const Text('User Valido ?'),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.red,
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  await controller.extensionisValidUserAndLogin();
+                },
+                child: const Text('User Valido ? + Login Sucesso'),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.red,
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  await controller.extensionisValidUserAndLoginError();
+                },
+                child: const Text('User Valido ? + Login erro'),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.red,
+                ),
               ),
             ],
           ),
