@@ -21,8 +21,11 @@ mixin AsyncLoaderMixin on GetxController {
         onWillPop: () async => false,
         child: Center(
           child: Container(
-            color: Colors.white,
             padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+            ),
             child: const CircularProgressIndicator(),
           ),
         ),
